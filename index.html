@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Workshop Feedback</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0b0f1a;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .feedback-container {
+      background: rgba(20, 30, 50, 0.95);
+      border: 1px solid #1f2a40;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 200, 255, 0.2);
+      padding: 40px;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h2 {
+      color: #00c8ff;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #aaa;
+    }
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-size: 2.5rem;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .stars span {
+      color: #444;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    .stars span.selected {
+      color: #00c8ff;
+      transform: scale(1.2);
+      text-shadow: 0 0 10px #00c8ff;
+    }
+
+    #satisfaction-level {
+      font-size: 1.1rem;
+      color: #00ffee;
+      margin-top: -10px;
+    }
+
+    button {
+      margin-top: 25px;
+      background: linear-gradient(145deg, #00c8ff, #0077ff);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00c8ff80;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(145deg, #0077ff, #00c8ff);
+    }
+  </style>
+</head>
+<body>
+
+<div class="feedback-container">
+  <h2>Workshop Feedback</h2>
+  <p>Rate your experience:</p>
+
+  <div class="stars" id="star-rating">
+    <span data-value="1">&#9733;</span>
+    <span data-value="2">&#9733;</span>
+    <span data-value="3">&#9733;</span>
+    <span data-value="4">&#9733;</span>
+    <span data-value="5">&#9733;</span>
+  </div>
+
+  <div id="satisfaction-level">Select a rating</div>
+
+  <button onclick="submitFeedback()">Submit</button>
+</div>
+
+<script>
+  const stars = document.querySelectorAll('#star-rating span');
+  const satisfactionText = document.getElementById('satisfaction-level');
+  let selectedRating = 0;
+
+  const satisfactionLevels = {
+    1: "Not Satisfied",
+    2: "Slightly Satisfied",
+    3: "Satisfied",
+    4: "Very Satisfied",
+    5: "Extremely Satisfied"
+  };
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.getAttribute('data-value'));
+      updateStars(selectedRating);
+      satisfactionText.textContent = satisfactionLevels[selectedRating];
+    });
+  });
+
+  function updateStars(rating) {
+    stars.forEach(star => {
+      const value = parseInt(star.getAttribute('data-value'));
+      star.classList.toggle('selected', value <= rating);
+    });
+  }
+
+  function submitFeedback() {
+    if (selectedRating === 0) {
+      alert("Please select a rating before submitting.");
+    } else {
+      alert(`Thank you! You rated us ${selectedRating} star(s): ${satisfactionLevels[selectedRating]}`);
+      // Handle submission logic here
+    }
+  }
+</script>
+
+</body>
+</html>
